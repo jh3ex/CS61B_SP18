@@ -85,6 +85,11 @@ public class IntList {
         /** Destructive method.
          * Add B to the tail of A
          * */
+        if (A == null) {
+            A = B;
+            return A;
+        }
+
         if (A.rest == null) {
             A.rest = B;
             return null;
@@ -102,23 +107,10 @@ public class IntList {
         /** Non-destructive method.
          * There are some potential bugs
          * What if A or B is null?*/
-        IntList res = new IntList(A.first, null);
-        IntList ptr = res;
-        IntList L = A.rest;
-        while (L != null) {
-            ptr.rest = new IntList(L.first, null);
-            ptr = ptr.rest;
-            L = L.rest;
+        if (A == null) {
+            return B;
         }
-
-        L = B;
-        while (L != null) {
-            ptr.rest = new IntList(L.first, null);
-            ptr = ptr.rest;
-            L = L.rest;
-        }
-
-        return res;
+        return new IntList(A.first, (catenate(A.rest, B)));
     }
 
 
