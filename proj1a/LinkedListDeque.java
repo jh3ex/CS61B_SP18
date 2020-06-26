@@ -2,25 +2,23 @@
  *
  */
 
-public class LinkedListDeque<Duck> {
-    private int size;
+public class LinkedListDeque<T> {
+    public int size;
     public ListNode sentinel;
-    public ListNode prev;
-    public ListNode next;
 
-    class ListNode {
+    private class ListNode {
         /** Nested class. */
-        public ListNode prev;
-        public ListNode next;
-        public Duck item;
-        public ListNode(Duck item0, ListNode prev0, ListNode next0) {
+        private ListNode prev;
+        private ListNode next;
+        private T item;
+        private ListNode(T item0, ListNode prev0, ListNode next0) {
             item = item0;
             prev = prev0;
             next = next0;
         }
     }
 
-    public LinkedListDeque(Duck item0) {
+    public LinkedListDeque(T item0) {
         // Constructor function
         // 1. create a sentinel node
         // 2. link sentinel node to first actual node
@@ -39,7 +37,7 @@ public class LinkedListDeque<Duck> {
         size = 0;
     }
 
-    public void addFirst(Duck item) {
+    public void addFirst(T item) {
         // Add a new item to the first position of the queue
         // 1. instantiate a new ListNode with provided item
         // 2. insert the new node in between sentinel and first node
@@ -54,7 +52,7 @@ public class LinkedListDeque<Duck> {
         size++;
     }
 
-    public void addLast(Duck item) {
+    public void addLast(T item) {
         // Add a new item to the last position of the queue
         // 1. instantiate a new ListNode with provided item
         // 2. similar to addFirst
@@ -85,29 +83,29 @@ public class LinkedListDeque<Duck> {
         }
     }
 
-    public Duck removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        Duck removed = sentinel.next.item;
+        T removed = sentinel.next.item;
         sentinel.next = sentinel.next.next;
         sentinel.next.prev = sentinel;
         size--;
         return removed;
     }
 
-    public Duck removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         }
-        Duck removed = sentinel.prev.item;
+        T removed = sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
         size--;
         return removed;
     }
 
-    public Duck get(int index) {
+    public T get(int index) {
         // get the index_th item in the queue
         // rule: must use iteration, not recursion
         // 1. copy sentinel to L
@@ -134,7 +132,7 @@ public class LinkedListDeque<Duck> {
         return L.item;
     }
 
-    public Duck getRecursive(int index) {
+    public T getRecursive(int index) {
         if (isEmpty()) {
             return null;
         }
@@ -153,14 +151,14 @@ public class LinkedListDeque<Duck> {
     }
 
     /** Helper functions. */
-    private Duck getRecursiveForward(int index, ListNode L) {
+    private T getRecursiveForward(int index, ListNode L) {
         if (index == 0) {
             return L.item;
         }
         return getRecursiveForward(index - 1, L.next);
     }
 
-    private Duck getRecursiveBackward(int index, ListNode L) {
+    private T getRecursiveBackward(int index, ListNode L) {
         if (index == 0) {
             return L.item;
         }
@@ -178,3 +176,4 @@ public class LinkedListDeque<Duck> {
     }
 
 }
+

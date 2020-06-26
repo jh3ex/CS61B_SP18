@@ -7,29 +7,29 @@
  *           factor should always be at least 25%.
  * */
 
-public class ArrayDeque<Duck> {
+public class ArrayDeque<T> {
     public int nextFirst;
     public int nextLast;
-    private int first;
-    private int last;
-    public Duck[] items;
+    public int first;
+    public int last;
+    public T[] items;
     public int size;
     // Class parameters
-    static int init_length = 8;
 
-    public ArrayDeque(Duck item) {
-        items = (Duck[])new Object[init_length];
+
+    public ArrayDeque(T item) {
+        items = (T[])new Object[8];
         items[0] = item;
         size = 1;
         nextLast = 1;
-        nextFirst = init_length - 1;
+        nextFirst = 8 - 1;
         first = 0;
         last = 0;
     }
 
     public ArrayDeque() {
         // Construct a empty queue
-        items = (Duck[])new Object[init_length];
+        items = (T[])new Object[8];
         size = 0;
         nextFirst = 0;
         nextLast = 0;
@@ -37,7 +37,7 @@ public class ArrayDeque<Duck> {
         last = 0;
     }
 
-    public void addFirst(Duck item) {
+    public void addFirst(T item) {
         items[nextFirst] = item;
         size++;
         first = nextFirst;
@@ -48,7 +48,7 @@ public class ArrayDeque<Duck> {
         expandSize();
     }
 
-    public void addLast(Duck item) {
+    public void addLast(T item) {
         items[nextLast] = item;
         size++;
         last = nextLast;
@@ -66,7 +66,7 @@ public class ArrayDeque<Duck> {
         // 3. create a new items and copy to it
         double ratio = size / (double) items.length;
         if (ratio > 0.5) {
-            Duck[] newItems = (Duck[])new Object[size * 2];
+            T[] newItems = (T[])new Object[size * 2];
             // Examine if the loop is divided
             if (first <= last) {
                 System.arraycopy(items, first, newItems, 0, size);
@@ -100,31 +100,33 @@ public class ArrayDeque<Duck> {
         return size;
     }
 
-    public Duck removeFirst() {
+    public T removeFirst() {
         if (isEmpty()) {
             return null;
         }
-        Duck removed = items[first];
+        T removed = items[first];
         size--;
         nextFirst = first;
         first++;
         if (first == items.length) {
             first = 0;
         }
+        reduceSize();
         return removed;
     }
 
-    public Duck removeLast() {
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         }
-        Duck removed = items[last];
+        T removed = items[last];
         size--;
         nextLast = last;
         last--;
         if (last == -1) {
             last = items.length - 1;
         }
+        reduceSize();
         return removed;
     }
 
@@ -138,7 +140,7 @@ public class ArrayDeque<Duck> {
         if (ratio < 0.25) {
             // ratio < 0.25 ensures that new item can contain the previous item
             int newLength = Math.max(items.length/2, 16);
-            Duck[] newItems = (Duck[])new Object[newLength];
+            T[] newItems = (T[])new Object[newLength];
             if (first <= last) {
                 System.arraycopy(items, first, newItems, 0, size);
             } else {
@@ -159,7 +161,7 @@ public class ArrayDeque<Duck> {
         }
     }
 
-    public Duck get(int index) {
+    public T get(int index) {
         if (isEmpty()) {
             return null;
         }
@@ -201,10 +203,6 @@ public class ArrayDeque<Duck> {
 
     public static void main(String[] args) {
         ArrayDeque x = new ArrayDeque<Integer>(3);
-
     }
-
-
-
-
 }
+
