@@ -12,8 +12,6 @@ public class ArrayDeque<T> {
     private int nextLast;
     private T[] items;
     private int size;
-    // Class parameters
-
 
     public ArrayDeque() {
         // Construct a empty queue
@@ -26,58 +24,65 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         items[nextFirst] = item;
         size++;
-        nextFirst--;
-        if (nextFirst == -1) {
-            nextFirst = items.length - 1;
-        }
-        expandSize();
+        nextFirst = oneMinusPlus(nextFirst, -1);
+        reSize();
     }
 
     public void addLast(T item) {
         items[nextLast] = item;
         size++;
-        nextLast++;
-        if (nextLast == items.length) {
-            nextLast = 0;
-        }
-        expandSize();
+        nextLast = oneMinusPlus(nextLast, 1);
+        reSize();
     }
 
-    private void expandSize() {
-        // Expand the array whenever necessary
-        // 1. Inspect the usage ratio
-        // 2. If ration >= 50%, expand two times
-        // 3. create a new items and copy to it
+    private int oneMinusPlus(int x, int y) {
+        int z = x + y;
+        if (z < 0) {
+            z = items.length - 1;
+        } else if (z >= items.length) {
+            z = 0;
+        }
+        return z;
+    }
+
+    private void reSize() {
         double ratio = size / (double) items.length;
         if (ratio > 0.75) {
-            T[] newItems = (T[]) new Object[size * 2];
-            // Examine if the loop is divided
-            int first = getFirst();
-            int last = getLast();
-            if (first <= last) {
-                System.arraycopy(items, first, newItems, 0, size);
-            } else {
-                // If the loop is divided
-                // 2. Copy the first half, from first ~ length-1, total length-nextFirst
-                // 2. Copy the second half, from 0 ~ next
-                int firstHalfLength = items.length - first;
-                int secondHalfLength = last + 1;
-                System.arraycopy(items, first, newItems, 0, firstHalfLength);
-                System.arraycopy(items, 0, newItems, firstHalfLength, secondHalfLength);
+            // Expand size
+            migrate(size * 2);
+        } else if (ratio < 0.25) {
+            // Reduce size
+            if (size <= 16) {
+                return;
             }
-            // Discard the original array
-            items = newItems;
-            nextFirst = items.length - 1;
-            nextLast = size;
+            migrate(size / 2);
         }
+    }
 
+    private void migrate(int newSize) {
+        T[] newItems = (T[]) new Object[newSize];
+        // Examine if the loop is divided
+        int first = oneMinusPlus(nextFirst, 1);
+        int last = oneMinusPlus(nextLast, -1);
+        if (first <= last) {
+            System.arraycopy(items, first, newItems, 0, size);
+        } else {
+            // If the loop is divided
+            // 2. Copy the first half, from first ~ length-1, total length-nextFirst
+            // 2. Copy the second half, from 0 ~ next
+            int firstHalfLength = items.length - first;
+            int secondHalfLength = last + 1;
+            System.arraycopy(items, first, newItems, 0, firstHalfLength);
+            System.arraycopy(items, 0, newItems, firstHalfLength, secondHalfLength);
+        }
+        // Discard the original array
+        items = newItems;
+        nextFirst = items.length - 1;
+        nextLast = size;
     }
 
     public boolean isEmpty() {
-        if (size == 0) {
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
     public int size() {
@@ -88,11 +93,11 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        int first = getFirst();
+        int first = oneMinusPlus(nextFirst, 1);
         T removed = items[first];
         size--;
         nextFirst = first;
-        reduceSize();
+        reSize();
         return removed;
     }
 
@@ -100,43 +105,12 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        int last = getLast();
+        int last = oneMinusPlus(nextLast, -1);
         T removed = items[last];
         size--;
         nextLast = last;
-        reduceSize();
+        reSize();
         return removed;
-    }
-
-    private void reduceSize() {
-        // If the usage falls below 0.25 when array is longer than 16
-        // reduce the size by half;
-        if (items.length <= 16) {
-            return;
-        }
-        double ratio = size / (double) items.length;
-        if (ratio < 0.25) {
-            // ratio < 0.25 ensures that new item can contain the previous item
-            int first = getFirst();
-            int last = getLast();
-            int newLength = Math.max(items.length / 2, 16);
-            T[] newItems = (T[]) new Object[newLength];
-            if (first <= last) {
-                System.arraycopy(items, first, newItems, 0, size);
-            } else {
-                // If the loop is divided
-                // 2. Copy the first half, from first ~ length-1, total length-nextFirst
-                // 2. Copy the second half, from 0 ~ next
-                int firstHalfLength = items.length - first;
-                int secondHalfLength = last + 1;
-                System.arraycopy(items, first, newItems, 0, firstHalfLength);
-                System.arraycopy(items, 0, newItems, firstHalfLength, secondHalfLength);
-            }
-            // Discard the original array
-            items = newItems;
-            nextFirst = items.length - 1;
-            nextLast = size;
-        }
     }
 
     public T get(int index) {
@@ -146,7 +120,7 @@ public class ArrayDeque<T> {
         if (index > size) {
             return null;
         }
-        int first = getFirst();
+        int first = oneMinusPlus(nextFirst, 1);
         int indexInArray = first + index;
         if (indexInArray >= items.length) {
             indexInArray = indexInArray - items.length;
@@ -158,8 +132,8 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return;
         }
-        int first = getFirst();
-        int last = getLast();
+        int first = oneMinusPlus(nextFirst, 1);
+        int last = oneMinusPlus(nextLast, -1);
         if (first <= last) {
             print(first, last);
         } else {
@@ -167,22 +141,6 @@ public class ArrayDeque<T> {
             print(0, last);
         }
         System.out.print('\n');
-    }
-
-    private int getFirst() {
-        int first = nextFirst + 1;
-        if (first == items.length) {
-            first = 0;
-        }
-        return first;
-    }
-
-    private int getLast() {
-        int last = nextLast - 1;
-        if (last == -1) {
-            last = items.length - 1;
-        }
-        return last;
     }
 
     private void print(int printFirst, int printLast) {
