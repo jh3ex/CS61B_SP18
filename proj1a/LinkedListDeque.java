@@ -18,16 +18,6 @@ public class LinkedListDeque<T> {
         }
     }
 
-    public LinkedListDeque(T item0) {
-        // Constructor function
-        // 1. create a sentinel node
-        // 2. link sentinel node to first actual node
-        // 3. update size to 1
-        sentinel = new ListNode(null, null, null);
-        sentinel.next = new ListNode(item0, sentinel, sentinel);
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
 
     public LinkedListDeque() {
         // Construct a null LinkedListDeque
@@ -166,7 +156,7 @@ public class LinkedListDeque<T> {
     }
 
     private static void main(String[] args) {
-        LinkedListDeque x = new LinkedListDeque<Integer>(3);
+        LinkedListDeque x = new LinkedListDeque<Integer>();
         x.addFirst(9);
         x.addFirst(6);
         x.addFirst(9);
