@@ -27,7 +27,15 @@ public class ArrayDeque<T> {
         last = 0;
     }
 
-
+    public ArrayDeque() {
+        // Construct a empty queue
+        items = (T[]) new Object[8];
+        size = 0;
+        nextFirst = 0;
+        nextLast = 0;
+        first = 0;
+        last = 0;
+    }
 
     public void addFirst(T item) {
         items[nextFirst] = item;
@@ -167,9 +175,6 @@ public class ArrayDeque<T> {
         return items[indexInArray];
     }
 
-
-
-
     public void printDeque() {
         if (isEmpty()) {
             return;
@@ -191,19 +196,22 @@ public class ArrayDeque<T> {
         }
     }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         ArrayDeque x = new ArrayDeque<Integer>(0);
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 100000; i++) {
             x.addLast(i);
         }
+
         x.printDeque();
-        for (int i = 0; i < 3; i++) {
-            System.out.println(x.removeFirst());
+        for (int i = 0; i < 99999; i++) {
+            x.removeFirst();
+            // System.out.println(x.removeFirst());
 
         }
 
         x.printDeque();
-        System.out.println(x.get(6));
+        System.out.println(x.get(0));
+
     }
 }
 
