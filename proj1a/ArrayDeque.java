@@ -67,7 +67,7 @@ public class ArrayDeque<T> {
             }
             // Discard the original array
             items = newItems;
-             nextFirst = items.length - 1;
+            nextFirst = items.length - 1;
             nextLast = size;
         }
 
