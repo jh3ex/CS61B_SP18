@@ -67,9 +67,7 @@ public class ArrayDeque<T> {
             }
             // Discard the original array
             items = newItems;
-            first = 0;
-            nextFirst = items.length - 1;
-            last = size - 1;
+             nextFirst = items.length - 1;
             nextLast = size;
         }
 
@@ -171,7 +169,7 @@ public class ArrayDeque<T> {
         System.out.print('\n');
     }
 
-    public int getFirst() {
+    private int getFirst() {
         int first = nextFirst + 1;
         if (first == items.length) {
             first = 0;
@@ -179,7 +177,7 @@ public class ArrayDeque<T> {
         return first;
     }
 
-    public int getLast() {
+    private int getLast() {
         int last = nextLast - 1;
         if (last == -1) {
             last = items.length - 1;
@@ -192,20 +190,6 @@ public class ArrayDeque<T> {
             System.out.print(items[index]);
             System.out.print(' ');
         }
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque x = new ArrayDeque<Integer>();
-
-        x.addLast(0);
-        x.printDeque();
-        x.addFirst(1);
-        x.printDeque();
-        x.addFirst(2);
-        x.printDeque();
-        System.out.println(x.removeFirst());
-        System.out.println(x.get(1));
-
     }
 }
 

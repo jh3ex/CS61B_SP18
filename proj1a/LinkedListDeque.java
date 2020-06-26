@@ -18,7 +18,6 @@ public class LinkedListDeque<T> {
         }
     }
 
-
     public LinkedListDeque() {
         // Construct a null LinkedListDeque
         sentinel = new ListNode(null, null, null);
@@ -153,15 +152,6 @@ public class LinkedListDeque<T> {
             return L.item;
         }
         return getRecursiveBackward(index - 1, L.prev);
-    }
-
-    private static void main(String[] args) {
-        LinkedListDeque x = new LinkedListDeque<Integer>();
-        x.addFirst(9);
-        x.addFirst(6);
-        x.addFirst(9);
-        x.printDeque();
-        System.out.println(x.getRecursive(3));
     }
 }
 
