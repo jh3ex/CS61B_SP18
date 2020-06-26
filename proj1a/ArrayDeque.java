@@ -8,12 +8,12 @@
  * */
 
 public class ArrayDeque<T> {
-    public int nextFirst;
-    public int nextLast;
-    public int first;
-    public int last;
-    public T[] items;
-    public int size;
+    private int nextFirst;
+    private int nextLast;
+    private int first;
+    private int last;
+    private T[] items;
+    private int size;
     // Class parameters
 
 
@@ -53,7 +53,7 @@ public class ArrayDeque<T> {
         size++;
         last = nextLast;
         nextLast++;
-        if (nextLast == size) {
+        if (nextLast == items.length) {
             nextLast = 0;
         }
         expandSize();
@@ -82,7 +82,7 @@ public class ArrayDeque<T> {
             // Discard the original array
             items = newItems;
             first = 0;
-            nextFirst = items.length -1;
+            nextFirst = items.length - 1;
             last = size - 1;
             nextLast = size;
         }
@@ -130,7 +130,7 @@ public class ArrayDeque<T> {
         return removed;
     }
 
-    public void reduceSize() {
+    private void reduceSize() {
         // If the usage falls below 0.25 when array is longer than 16
         // reduce the size by half;
         if (items.length <= 16) {
@@ -139,7 +139,7 @@ public class ArrayDeque<T> {
         double ratio = size / (double) items.length;
         if (ratio < 0.25) {
             // ratio < 0.25 ensures that new item can contain the previous item
-            int newLength = Math.max(items.length/2, 16);
+            int newLength = Math.max(items.length / 2, 16);
             T[] newItems = (T[])new Object[newLength];
             if (first <= last) {
                 System.arraycopy(items, first, newItems, 0, size);
@@ -155,7 +155,7 @@ public class ArrayDeque<T> {
             // Discard the original array
             items = newItems;
             first = 0;
-            nextFirst = items.length -1;
+            nextFirst = items.length - 1;
             last = size - 1;
             nextLast = size;
         }
@@ -201,8 +201,14 @@ public class ArrayDeque<T> {
 
 
 
-    public static void main(String[] args) {
-        ArrayDeque x = new ArrayDeque<Integer>(3);
+    private static void main(String[] args) {
+        ArrayDeque x = new ArrayDeque<Integer>(0);
+        for (int i = 0; i <= 10; i++) {
+            x.addLast(i);
+        }
+
+        x.printDeque();
+        System.out.println(x.get(0));
     }
 }
 

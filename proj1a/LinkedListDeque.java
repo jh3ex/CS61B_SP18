@@ -3,8 +3,8 @@
  */
 
 public class LinkedListDeque<T> {
-    public int size;
-    public ListNode sentinel;
+    private int size;
+    private ListNode sentinel;
 
     private class ListNode {
         /** Nested class. */
@@ -46,9 +46,9 @@ public class LinkedListDeque<T> {
         //   2.2 first node prev point to new node
         //   2.3 sentinel next point to new node
         //   2.4 increment the size
-        ListNode new_node = new ListNode(item, sentinel, sentinel.next);
-        sentinel.next.prev = new_node;
-        sentinel.next = new_node;
+        ListNode newNode = new ListNode(item, sentinel, sentinel.next);
+        sentinel.next.prev = newNode;
+        sentinel.next = newNode;
         size++;
     }
 
@@ -56,9 +56,9 @@ public class LinkedListDeque<T> {
         // Add a new item to the last position of the queue
         // 1. instantiate a new ListNode with provided item
         // 2. similar to addFirst
-        ListNode new_node = new ListNode(item, sentinel.prev, sentinel);
-        sentinel.prev.next = new_node;
-        sentinel.prev = new_node;
+        ListNode newNode = new ListNode(item, sentinel.prev, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
         size++;
     }
 
@@ -165,7 +165,7 @@ public class LinkedListDeque<T> {
         return getRecursiveBackward(index - 1, L.prev);
     }
 
-    public static void main(String[] args) {
+    private static void main(String[] args) {
         LinkedListDeque x = new LinkedListDeque<Integer>(3);
         x.addFirst(9);
         x.addFirst(6);
