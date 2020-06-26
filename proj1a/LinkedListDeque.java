@@ -29,13 +29,7 @@ public class LinkedListDeque<T> {
         size = 1;
     }
 
-    public LinkedListDeque() {
-        // Construct a null LinkedListDeque
-        sentinel = new ListNode(null, null, null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        size = 0;
-    }
+
 
     public void addFirst(T item) {
         // Add a new item to the first position of the queue
@@ -172,8 +166,6 @@ public class LinkedListDeque<T> {
         x.addFirst(9);
         x.printDeque();
         System.out.println(x.getRecursive(3));
-
     }
-
 }
 

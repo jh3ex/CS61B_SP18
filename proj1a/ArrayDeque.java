@@ -18,7 +18,7 @@ public class ArrayDeque<T> {
 
 
     public ArrayDeque(T item) {
-        items = (T[])new Object[8];
+        items = (T[]) new Object[8];
         items[0] = item;
         size = 1;
         nextLast = 1;
@@ -27,15 +27,7 @@ public class ArrayDeque<T> {
         last = 0;
     }
 
-    public ArrayDeque() {
-        // Construct a empty queue
-        items = (T[])new Object[8];
-        size = 0;
-        nextFirst = 0;
-        nextLast = 0;
-        first = 0;
-        last = 0;
-    }
+
 
     public void addFirst(T item) {
         items[nextFirst] = item;
@@ -66,7 +58,7 @@ public class ArrayDeque<T> {
         // 3. create a new items and copy to it
         double ratio = size / (double) items.length;
         if (ratio > 0.5) {
-            T[] newItems = (T[])new Object[size * 2];
+            T[] newItems = (T[]) new Object[size * 2];
             // Examine if the loop is divided
             if (first <= last) {
                 System.arraycopy(items, first, newItems, 0, size);
@@ -140,7 +132,7 @@ public class ArrayDeque<T> {
         if (ratio < 0.25) {
             // ratio < 0.25 ensures that new item can contain the previous item
             int newLength = Math.max(items.length / 2, 16);
-            T[] newItems = (T[])new Object[newLength];
+            T[] newItems = (T[]) new Object[newLength];
             if (first <= last) {
                 System.arraycopy(items, first, newItems, 0, size);
             } else {
@@ -199,16 +191,19 @@ public class ArrayDeque<T> {
         }
     }
 
-
-
-    private static void main(String[] args) {
+    public static void main(String[] args) {
         ArrayDeque x = new ArrayDeque<Integer>(0);
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             x.addLast(i);
+        }
+        x.printDeque();
+        for (int i = 0; i < 3; i++) {
+            System.out.println(x.removeFirst());
+
         }
 
         x.printDeque();
-        System.out.println(x.get(0));
+        System.out.println(x.get(6));
     }
 }
 
