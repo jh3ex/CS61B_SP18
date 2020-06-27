@@ -10,7 +10,7 @@
 public class ArrayDeque<T> {
     private int nextFirst;
     private int nextLast;
-    private T[] items;
+    public T[] items;
     private int size;
 
     public ArrayDeque() {
@@ -49,10 +49,10 @@ public class ArrayDeque<T> {
         double ratio = size / (double) items.length;
         if (ratio > 0.75) {
             // Expand size
-            migrate(items.length * 2);
+            migrate(size * 2);
         } else if (ratio < 0.25) {
             // Reduce size
-            if (size <= 16) {
+            if (items.length <= 16) {
                 return;
             }
             migrate(Math.max(16, items.length / 2));
