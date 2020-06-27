@@ -49,13 +49,13 @@ public class ArrayDeque<T> {
         double ratio = size / (double) items.length;
         if (ratio > 0.75) {
             // Expand size
-            migrate(size * 2);
+            migrate(items.length * 2);
         } else if (ratio < 0.25) {
             // Reduce size
             if (size <= 16) {
                 return;
             }
-            migrate(size / 2);
+            migrate(Math.max(16, items.length / 2));
         }
     }
 
