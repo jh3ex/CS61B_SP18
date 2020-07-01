@@ -7,7 +7,7 @@
  *           factor should always be at least 25%.
  * */
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private int nextFirst;
     private int nextLast;
     private T[] items;

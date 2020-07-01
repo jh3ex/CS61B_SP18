@@ -1,7 +1,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class testPalindromeByN {
+public class TestPalindromeByN {
     static Palindrome palindrome = new Palindrome();
 
     @Test
@@ -13,3 +13,4 @@ public class testPalindromeByN {
         assertFalse(res2);
     }
 }
+

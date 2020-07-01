@@ -43,7 +43,7 @@ public class Palindrome {
      */
     public boolean isPalindrome(String word, CharacterComparator cc) {
         Deque<Character> wordArray = wordToDeque(word);
-                return isOboPalindrome(wordArray, cc);
+        return isOboPalindrome(wordArray, cc);
     }
 
     private boolean isOboPalindrome(Deque<Character> word, CharacterComparator cc) {
