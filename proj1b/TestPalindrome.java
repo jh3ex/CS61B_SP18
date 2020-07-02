@@ -32,7 +32,7 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("flake", obo));
         assertFalse(palindrome.isPalindrome("mike", obo));
         assertTrue(palindrome.isPalindrome("a", obo));
-        assertFalse(palindrome.isPalindrome("$%", obo));
+        assertFalse(palindrome.isPalindrome("$a", obo));
 
 
     }
