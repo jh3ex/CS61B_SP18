@@ -3,6 +3,8 @@ package synthesizer;
 
 import edu.princeton.cs.introcs.StdAudio;
 
+import javax.swing.*;
+
 public class GuitarString {
     /** Constants. Do not change. In case you're curious, the keyword final means
      * the values cannot be changed at runtime. We'll discuss this and other topics
@@ -49,11 +51,10 @@ public class GuitarString {
 
     /* Return the double at the front of the buffer. */
     public double sample() {
+        if (buffer.isEmpty()) {
+            throw new RuntimeException("Array is Empty");
+        }
         return buffer.peek();
-    }
-
-    public static void main(String[] args) {
-        StdAudio.play(0.333);
     }
 
 }
